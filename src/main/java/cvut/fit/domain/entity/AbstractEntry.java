@@ -1,7 +1,9 @@
 package cvut.fit.domain.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+//import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Date;
 
 /**
  * Created by Jakub Tuček on 28.8.2016.
@@ -20,15 +22,15 @@ public abstract class AbstractEntry {
 
     private String content;
 
-    private Date posted;
-    private Date created;
+    private LocalDate posted;
+    private LocalDate created;
 
 
     public AbstractEntry() {
     }
 
 
-    public AbstractEntry(Integer valveId, String title, String content, Date posted, Date created) {
+    public AbstractEntry(Integer valveId, String title, String content, LocalDate posted, LocalDate created) {
 
         this.valveId = valveId;
         this.title = title;
@@ -69,19 +71,19 @@ public abstract class AbstractEntry {
         this.content = content;
     }
 
-    public Date getCreated() {
+    public LocalDate getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDate created) {
         this.created = created;
     }
 
-    public Date getPosted() {
+    public LocalDate getPosted() {
         return posted;
     }
 
-    public void setPosted(Date posted) {
+    public void setPosted(LocalDate posted) {
         this.posted = posted;
     }
 }

@@ -1,5 +1,6 @@
 package cvut.fit.controllers;
 
+import cvut.fit.service.BlogParsingException;
 import cvut.fit.service.BlogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +29,8 @@ public class IndexController {
     public String index(Model model) {
         try {
             blogService.downloadAll();
-        } catch (IOException ex) {
-
+        } catch (BlogParsingException | IOException ex) {
+            log.error(ex.toString());
         }
         return "index";
     }

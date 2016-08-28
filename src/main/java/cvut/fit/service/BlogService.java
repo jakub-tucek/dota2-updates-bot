@@ -27,7 +27,7 @@ public class BlogService {
     }
 
 
-    public List<BlogUpdateEntry> downloadAll() throws IOException {
+    public List<BlogUpdateEntry> downloadAll() throws IOException, BlogParsingException {
         List<BlogUpdateEntry> blogEntryList = new ArrayList<>();
 
 
