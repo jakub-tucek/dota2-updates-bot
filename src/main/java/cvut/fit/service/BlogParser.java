@@ -56,7 +56,7 @@ public class BlogParser {
         System.out.println(content);
 
 
-        return null;
+        return new BlogUpdateEntry(valveId, title, content, postDate);
     }
 
     /**

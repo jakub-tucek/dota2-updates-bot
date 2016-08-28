@@ -30,13 +30,13 @@ public abstract class AbstractEntry {
     }
 
 
-    public AbstractEntry(Integer valveId, String title, String content, LocalDate posted, LocalDate created) {
+    public AbstractEntry(Integer valveId, String title, String content, LocalDate posted) {
 
         this.valveId = valveId;
         this.title = title;
         this.content = content;
         this.posted = posted;
-        this.created = created;
+        this.created = LocalDate.now();
     }
 
     public Integer getId() {
