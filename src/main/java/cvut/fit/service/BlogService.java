@@ -4,6 +4,8 @@ import cvut.fit.domain.entity.BlogEntry;
 import cvut.fit.domain.entity.BlogUpdateEntry;
 import cvut.fit.domain.repository.BlogEntryRepository;
 import cvut.fit.domain.repository.BlogUpdateEntryRepository;
+import cvut.fit.service.parser.BlogParser;
+import cvut.fit.service.parser.BlogParsingException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -12,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 

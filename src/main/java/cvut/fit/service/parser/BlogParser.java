@@ -1,10 +1,11 @@
-package cvut.fit.service;
+package cvut.fit.service.parser;
 
 import cvut.fit.domain.entity.AbstractEntry;
 import cvut.fit.domain.entity.BlogEntry;
 import cvut.fit.domain.entity.BlogUpdateEntry;
 import cvut.fit.domain.repository.BlogEntryRepository;
 import cvut.fit.domain.repository.BlogUpdateEntryRepository;
+import cvut.fit.service.BlogConfig;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;

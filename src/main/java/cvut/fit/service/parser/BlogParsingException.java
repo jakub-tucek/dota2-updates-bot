@@ -1,4 +1,4 @@
-package cvut.fit.service;
+package cvut.fit.service.parser;
 
 /**
  * Created by Jakub Tuček on 28.8.2016.
