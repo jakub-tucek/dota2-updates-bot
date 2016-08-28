@@ -5,7 +5,7 @@ package cvut.fit.service;
  */
 public class BlogConfig {
 
-    public final static String PROXY = "31.31.73.195 ";
+    public final static String PROXY = "31.31.73.195";
 //    public final static int PORT = 80;
     public final static String PORT = "3128";
 

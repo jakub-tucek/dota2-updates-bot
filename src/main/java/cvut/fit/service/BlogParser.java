@@ -49,7 +49,7 @@ public class BlogParser {
         List<BlogUpdateEntry> basicBlogEntryListPage = new ArrayList<>();
         Elements mainDiv = html.select("div[id^=post]");
         for (Element entry : mainDiv) {
-            BlogUpdateEntry basicBlogEntry = (BlogUpdateEntry) basicParse(entry, true);
+            BlogUpdateEntry basicBlogEntry = (BlogUpdateEntry) parseBasic(entry, true);
             List<BlogUpdateEntry> bl = blogUpdateEntryRepository.findByValveId(basicBlogEntry.getValveId());
 
             if (bl.size() != 0) {
@@ -72,7 +72,8 @@ public class BlogParser {
         List<BlogEntry> blogEntryListPage = new ArrayList<>();
         Elements mainDiv = html.select("div[id^=post]");
         for (Element entry : mainDiv) {
-            BlogEntry blogEntry = (BlogEntry) basicParse(entry, false);
+            BlogEntry blogEntry = (BlogEntry) parseBasic(entry, false);
+            parseBlogEntry(entry, blogEntry);
             List<BlogEntry> bl = blogEntryRepository.findByValveId(blogEntry.getValveId());
 
             if (bl.size() != 0) {
@@ -84,13 +85,13 @@ public class BlogParser {
         return blogEntryListPage;
     }
 
-    private AbstractEntry basicParse(Element entry, boolean isBlogUpdate) throws NumberFormatException, BlogParsingException {
+    private AbstractEntry parseBasic(Element entry, boolean isBlogUpdate) throws NumberFormatException, BlogParsingException {
         int valveId = parseValveId(entry);
         String title = parseTitle(entry);
 
         String[] postDateAuthorPartSplit = parsePostDateAuthor(entry);
         LocalDate postDate = parsePostDateString(postDateAuthorPartSplit[0]);
-        String author = parserAuthorString(postDateAuthorPartSplit[1]);
+        String author = parseAuthorString(postDateAuthorPartSplit[1]);
 
         String content = parseContent(entry);
 
@@ -99,16 +100,17 @@ public class BlogParser {
     }
 
 
-    private BlogEntry parseEntry(Element entry, BlogEntry blogEntry) throws NumberFormatException, BlogParsingException {
+    private void parseBlogEntry(Element entry, BlogEntry blogEntry) throws NumberFormatException, BlogParsingException {
         blogEntry.setUrl(parseUrl(entry));
 
-        return null;
     }
 
     private String parseUrl(Element entry) {
         Elements titleEl = entry.select(BlogConfig.TITLE_SELECTOR);
         Elements elTitleLink = titleEl.select("a");
+
         System.out.println(elTitleLink.attr("href"));
+
         return elTitleLink.attr("href");
     }
 
@@ -122,7 +124,8 @@ public class BlogParser {
      */
     private int parseValveId(Element entry) throws NumberFormatException {
         String valveIdString = entry.attributes().get("id");
-        return Integer.parseInt(valveIdString.substring(BlogConfig.ENTRY_PREFIX_ID.length() + 1));
+        System.out.println(valveIdString);
+        return Integer.parseInt(valveIdString.substring(BlogConfig.ENTRY_PREFIX_ID.length()));
     }
 
     /**
@@ -167,7 +170,7 @@ public class BlogParser {
         return dateStringSplit;
     }
 
-    private String parserAuthorString(String author) {
+    private String parseAuthorString(String author) {
         return author.substring(BlogConfig.AUTHOR_OFFSET);
     }
 

@@ -44,10 +44,7 @@ public class BlogService {
 
         for (int i = 1; i <= BlogConfig.BLOG_UPDATE_MAX_PAGES; i++) {
 
-            System.setProperty("http.proxyHost", BlogConfig.PROXY);
-            System.setProperty("http.proxyPort", BlogConfig.PORT);
-            System.setProperty("https.proxyHost", BlogConfig.PROXY);
-            System.setProperty("https.proxyPort", BlogConfig.PORT);
+//            setProxy();
 
             Document html = Jsoup.connect(BlogConfig.BLOG_UPDATE_URL + i).userAgent(BlogConfig.USER_AGENT).header("Accept-Language", BlogConfig.HEADER_ACCEPT_LANG).get();
 
@@ -65,11 +62,7 @@ public class BlogService {
     public List<BlogEntry> downloadAllBlog() throws IOException, BlogParsingException {
         List<BlogEntry> blogEntryList = new ArrayList<>();
 
-        System.setProperty("http.proxyHost", BlogConfig.PROXY);
-        System.setProperty("http.proxyPort", BlogConfig.PORT);
-        System.setProperty("https.proxyHost", BlogConfig.PROXY);
-        System.setProperty("https.proxyPort", BlogConfig.PORT);
-
+//        setProxy();
 
         for (int i = 1; i <= BlogConfig.BLOG_MAX_PAGES; i++) {
             Document html = Jsoup.connect(BlogConfig.BLOG_URL).userAgent(BlogConfig.USER_AGENT).header("Accept-Language", BlogConfig.HEADER_ACCEPT_LANG).get();
@@ -81,10 +74,20 @@ public class BlogService {
 
             blogEntryList.addAll(blogEntryListPage);
         }
-
-        System.out.println(blogEntryList);
         return blogEntryList;
     }
+
+    private void setProxy() {
+        System.setProperty("http.proxyHost", BlogConfig.PROXY);
+        System.setProperty("http.proxyPort", BlogConfig.PORT);
+        System.setProperty("https.proxyHost", BlogConfig.PROXY);
+        System.setProperty("https.proxyPort", BlogConfig.PORT);
+    }
+
+
+    /**
+     * PERSISTENCE
+     */
 
     public Iterable<BlogUpdateEntry> getAllBlogUpdates() throws BlogParsingException, IOException {
         return blogUpdateEntryRepository.findAll();
