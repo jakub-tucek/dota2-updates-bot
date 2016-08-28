@@ -14,11 +14,10 @@ import java.time.LocalDateTime;
  * Created by Jakub Tuček on 28.8.2016.
  */
 @Entity
-@Inheritance
-public abstract class AbstractEntry {
+public class AbstractEntry {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private Integer valveId;

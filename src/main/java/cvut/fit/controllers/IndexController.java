@@ -1,5 +1,6 @@
 package cvut.fit.controllers;
 
+import cvut.fit.domain.entity.BlogEntry;
 import cvut.fit.domain.entity.BlogUpdateEntry;
 import cvut.fit.service.BlogParsingException;
 import cvut.fit.service.BlogService;
@@ -30,9 +31,35 @@ public class IndexController {
     @RequestMapping("/")
     public String index(Model model) {
         try {
-            List<BlogUpdateEntry> blogUpdateEntries = blogService.downloadAllUpdates();
-            System.out.println(blogUpdateEntries);
+            List<BlogUpdateEntry> blogUpdateEntries = blogService.downloadAllBlogUpdates();
             model.addAttribute("blogUpdateEntries", blogUpdateEntries);
+
+            List<BlogEntry> blogEntries = blogService.downloadAllBlog();
+            model.addAttribute("blogEntries", blogEntries);
+
+        } catch (BlogParsingException | IOException ex) {
+            log.error(ex.toString());
+        }
+        return "index";
+    }
+
+    @RequestMapping("/updates")
+    public String updates(Model model) {
+        try {
+
+            List<BlogUpdateEntry> blogUpdateEntries = blogService.getAllBlogUpdates();
+            model.addAttribute("blogUpdateEntries", blogUpdateEntries);
+        } catch (BlogParsingException | IOException ex) {
+            log.error(ex.toString());
+        }
+        return "index";
+    }
+
+    @RequestMapping("/blog")
+    public String blog(Model model) {
+        try {
+            List<BlogUpdateEntry> blogEntries = blogService.getAllBlog();
+            model.addAttribute("blogEntries", blogEntries);
         } catch (BlogParsingException | IOException ex) {
             log.error(ex.toString());
         }

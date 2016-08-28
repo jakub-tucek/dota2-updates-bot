@@ -1,7 +1,9 @@
 package cvut.fit.service;
 
+import cvut.fit.domain.entity.AbstractEntry;
 import cvut.fit.domain.entity.BlogEntry;
 import cvut.fit.domain.entity.BlogUpdateEntry;
+import cvut.fit.domain.repository.BlogEntryRepository;
 import cvut.fit.domain.repository.BlogUpdateEntryRepository;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,52 +26,92 @@ import java.util.*;
 public class BlogParser {
     private static final Logger log = LoggerFactory.getLogger(BlogParser.class);
 
-    final
-    BlogUpdateEntryRepository blogUpdateEntryRepository;
+    final BlogUpdateEntryRepository blogUpdateEntryRepository;
+
+    private final BlogEntryRepository blogEntryRepository;
+
 
     @Autowired
-    public BlogParser(BlogUpdateEntryRepository blogUpdateEntryRepository) {
+    public BlogParser(BlogUpdateEntryRepository blogUpdateEntryRepository, BlogEntryRepository blogEntryRepository) {
         this.blogUpdateEntryRepository = blogUpdateEntryRepository;
+        this.blogEntryRepository = blogEntryRepository;
     }
 
+    /**
+     * Parse update page starter.
+     *
+     * @param html
+     * @return
+     * @throws NumberFormatException
+     * @throws BlogParsingException
+     */
     public List<BlogUpdateEntry> parseUpdatePage(Document html) throws NumberFormatException, BlogParsingException {
-        List<BlogUpdateEntry> blogUpdateEntryListPage = new ArrayList<>();
-
+        List<BlogUpdateEntry> basicBlogEntryListPage = new ArrayList<>();
         Elements mainDiv = html.select("div[id^=post]");
-
         for (Element entry : mainDiv) {
-            BlogUpdateEntry blogUpdateEntry = parseUpdateEntry(entry);
-            List<BlogUpdateEntry> bl = blogUpdateEntryRepository.findByValveId(blogUpdateEntry.getValveId());
+            BlogUpdateEntry basicBlogEntry = (BlogUpdateEntry) basicParse(entry, true);
+            List<BlogUpdateEntry> bl = blogUpdateEntryRepository.findByValveId(basicBlogEntry.getValveId());
 
             if (bl.size() != 0) {
-                log.info("Found collision in valve id");
+                log.info("Found collision in valve id(update)");
                 break;
             }
-            blogUpdateEntryListPage.add(parseUpdateEntry(entry));
-            blogUpdateEntryRepository.save(blogUpdateEntry);
+            basicBlogEntryListPage.add(basicBlogEntry);
         }
 
-        return blogUpdateEntryListPage;
+        return basicBlogEntryListPage;
     }
 
-    public List<BlogEntry> parseBlogPage(Document html) {
+    /**
+     * Parse blog starter.
+     *
+     * @param html
+     * @return
+     */
+    public List<BlogEntry> parseBlogPage(Document html) throws NumberFormatException, BlogParsingException {
+        List<BlogEntry> blogEntryListPage = new ArrayList<>();
+        Elements mainDiv = html.select("div[id^=post]");
+        for (Element entry : mainDiv) {
+            BlogEntry blogEntry = (BlogEntry) basicParse(entry, false);
+            List<BlogEntry> bl = blogEntryRepository.findByValveId(blogEntry.getValveId());
+
+            if (bl.size() != 0) {
+                log.info("Found collision in valve id(blog)");
+                break;
+            }
+            blogEntryListPage.add(blogEntry);
+        }
+        return blogEntryListPage;
+    }
+
+    private AbstractEntry basicParse(Element entry, boolean isBlogUpdate) throws NumberFormatException, BlogParsingException {
+        int valveId = parseValveId(entry);
+        String title = parseTitle(entry);
+
+        String[] postDateAuthorPartSplit = parsePostDateAuthor(entry);
+        LocalDate postDate = parsePostDateString(postDateAuthorPartSplit[0]);
+        String author = parserAuthorString(postDateAuthorPartSplit[1]);
+
+        String content = parseContent(entry);
+
+        if (isBlogUpdate) return new BlogUpdateEntry(valveId, title, author, content, postDate);
+        return new BlogEntry(valveId, title, author, content, postDate);
+    }
+
+
+    private BlogEntry parseEntry(Element entry, BlogEntry blogEntry) throws NumberFormatException, BlogParsingException {
+        blogEntry.setUrl(parseUrl(entry));
 
         return null;
     }
 
-
-    private BlogUpdateEntry parseUpdateEntry(Element el) throws NumberFormatException, BlogParsingException {
-        int valveId = parseValveId(el);
-        String title = parseTitle(el);
-
-        String[] postDateAuthorPartSplit = parsePostDateAuthor(el);
-        LocalDate postDate = parsePostDateString(postDateAuthorPartSplit[0]);
-        String author = parserAuthorString(postDateAuthorPartSplit[1]);
-
-        String content = parseContent(el);
-
-        return new BlogUpdateEntry(valveId, title, author, content, postDate);
+    private String parseUrl(Element entry) {
+        Elements titleEl = entry.select(BlogConfig.TITLE_SELECTOR);
+        Elements elTitleLink = titleEl.select("a");
+        System.out.println(elTitleLink.attr("href"));
+        return elTitleLink.attr("href");
     }
+
 
     /**
      * Parse valve internal entry id.

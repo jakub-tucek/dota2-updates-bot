@@ -12,6 +12,11 @@
     <p th:text="${entry.content}"></p>
     <span th:text="${entry.created}"></span>
 </div>
-
+<div th:each="entry : ${blogEntries}">
+    <h2 th:text="${entry.title}"></h2>
+    <span th:text="${entry.posted}"></span>
+    <p th:text="${entry.content}"></p>
+    <span th:text="${entry.created}"></span>
+</div>
 </body>
 </html>

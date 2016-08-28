@@ -17,14 +17,14 @@ public class BlogConfig {
     /**
      * Update part config
      */
-    public final static int BLOG_UPDATE_MAX_PAGES = 8;
+    public final static int BLOG_UPDATE_MAX_PAGES = 8; //28.8 - 8
 
     public final static String BLOG_UPDATE_URL = "http://www.dota2.com/news/updates/?p=";
 
     /**
      * Blog part config
      */
-    public final static int BLOG_MAX_PAGES = 52;
+    public final static int BLOG_MAX_PAGES = 2; //28.8 - 52
 
     public final static String BLOG_URL = "http://blog.dota2.com/page/";
 

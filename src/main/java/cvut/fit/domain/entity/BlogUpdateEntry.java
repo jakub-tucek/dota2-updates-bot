@@ -1,7 +1,6 @@
 package cvut.fit.domain.entity;
 
 import javax.persistence.Entity;
-import java.sql.Date;
 import java.time.LocalDate;
 
 /**
