@@ -47,7 +47,7 @@ public class IndexController {
     public String updates(Model model) {
         try {
 
-            List<BlogUpdateEntry> blogUpdateEntries = blogService.getAllBlogUpdates();
+            Iterable<BlogUpdateEntry> blogUpdateEntries = blogService.getAllBlogUpdates();
             model.addAttribute("blogUpdateEntries", blogUpdateEntries);
         } catch (BlogParsingException | IOException ex) {
             log.error(ex.toString());
@@ -58,7 +58,7 @@ public class IndexController {
     @RequestMapping("/blog")
     public String blog(Model model) {
         try {
-            List<BlogUpdateEntry> blogEntries = blogService.getAllBlog();
+            Iterable<BlogEntry> blogEntries = blogService.getAllBlog();
             model.addAttribute("blogEntries", blogEntries);
         } catch (BlogParsingException | IOException ex) {
             log.error(ex.toString());

@@ -5,11 +5,16 @@ package cvut.fit.service;
  */
 public class BlogConfig {
 
+    public final static String PROXY = "31.31.73.195 ";
+//    public final static int PORT = 80;
+    public final static String PORT = "3128";
+
+
     /**
      * Basic config
      */
 
-    public final static String USER_AGENT = "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36";
+    public final static String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0";
 
     public final static String HEADER_ACCEPT_LANG = "en-US";
 
@@ -26,7 +31,8 @@ public class BlogConfig {
      */
     public final static int BLOG_MAX_PAGES = 2; //28.8 - 52
 
-    public final static String BLOG_URL = "http://blog.dota2.com/page/";
+//        public final static String BLOG_URL = "http://blog.dota2.com/page/";
+    public final static String BLOG_URL = "http://tomas.hostareal.cz/dota/index.php";
 
     /**
      * Parsing const

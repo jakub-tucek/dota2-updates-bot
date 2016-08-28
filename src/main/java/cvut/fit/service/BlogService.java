@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +43,12 @@ public class BlogService {
         List<BlogUpdateEntry> blogEntryList = new ArrayList<>();
 
         for (int i = 1; i <= BlogConfig.BLOG_UPDATE_MAX_PAGES; i++) {
+
+            System.setProperty("http.proxyHost", BlogConfig.PROXY);
+            System.setProperty("http.proxyPort", BlogConfig.PORT);
+            System.setProperty("https.proxyHost", BlogConfig.PROXY);
+            System.setProperty("https.proxyPort", BlogConfig.PORT);
+
             Document html = Jsoup.connect(BlogConfig.BLOG_UPDATE_URL + i).userAgent(BlogConfig.USER_AGENT).header("Accept-Language", BlogConfig.HEADER_ACCEPT_LANG).get();
 
             List<BlogUpdateEntry> basicBlogEntryListPage = blogParser.parseUpdatePage(html);
@@ -57,26 +65,33 @@ public class BlogService {
     public List<BlogEntry> downloadAllBlog() throws IOException, BlogParsingException {
         List<BlogEntry> blogEntryList = new ArrayList<>();
 
+        System.setProperty("http.proxyHost", BlogConfig.PROXY);
+        System.setProperty("http.proxyPort", BlogConfig.PORT);
+        System.setProperty("https.proxyHost", BlogConfig.PROXY);
+        System.setProperty("https.proxyPort", BlogConfig.PORT);
+
+
         for (int i = 1; i <= BlogConfig.BLOG_MAX_PAGES; i++) {
-            Document html = Jsoup.connect(BlogConfig.BLOG_URL + i + "/").userAgent(BlogConfig.USER_AGENT).header("Accept-Language", BlogConfig.HEADER_ACCEPT_LANG).get();
+            Document html = Jsoup.connect(BlogConfig.BLOG_URL).userAgent(BlogConfig.USER_AGENT).header("Accept-Language", BlogConfig.HEADER_ACCEPT_LANG).get();
 
             List<BlogEntry> blogEntryListPage = blogParser.parseBlogPage(html);
 
             if (blogEntryListPage.size() == 0) break;
+            blogEntryListPage.forEach(blogEntryRepository::save);
+
             blogEntryList.addAll(blogEntryListPage);
         }
 
+        System.out.println(blogEntryList);
         return blogEntryList;
     }
 
-    public List<BlogUpdateEntry> getAllBlogUpdates() throws BlogParsingException, IOException {
-
-        return null;
+    public Iterable<BlogUpdateEntry> getAllBlogUpdates() throws BlogParsingException, IOException {
+        return blogUpdateEntryRepository.findAll();
     }
 
 
-    public List<BlogUpdateEntry> getAllBlog() throws BlogParsingException, IOException {
-
-        return null;
+    public Iterable<BlogEntry> getAllBlog() throws BlogParsingException, IOException {
+        return blogEntryRepository.findAll();
     }
 }
