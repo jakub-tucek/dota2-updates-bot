@@ -1,17 +1,15 @@
 package cvut.fit.service;
 
 import cvut.fit.domain.entity.BlogUpdateEntry;
+import cvut.fit.domain.repository.BlogUpdateEntryRepository;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -25,7 +23,12 @@ import java.util.*;
 public class BlogParser {
     private static final Logger log = LoggerFactory.getLogger(BlogParser.class);
 
-    public BlogParser() {
+    final
+    BlogUpdateEntryRepository blogUpdateEntryRepository;
+
+    @Autowired
+    public BlogParser(BlogUpdateEntryRepository blogUpdateEntryRepository) {
+        this.blogUpdateEntryRepository = blogUpdateEntryRepository;
     }
 
     public List<BlogUpdateEntry> parseUpdatePage(Document html) throws NumberFormatException, BlogParsingException {
@@ -33,28 +36,28 @@ public class BlogParser {
 
         Elements mainDiv = html.select("div[id^=post]");
 
-        // log.info(mainDivs.toString());
-
         for (Element entry : mainDiv) {
-            blogUpdateEntryListPage.add(parserUpdateEntry(entry));
+            BlogUpdateEntry blogUpdateEntry = parseUpdateEntry(entry);
+            List<BlogUpdateEntry> bl = blogUpdateEntryRepository.findByValveId(blogUpdateEntry.getValveId());
+
+            blogUpdateEntryListPage.add(parseUpdateEntry(entry));
+
+         //   if (bl.size() == 0) {
+                blogUpdateEntryRepository.save(blogUpdateEntry);
+          //      break;
+         //   }
         }
 
+        System.out.println(blogUpdateEntryListPage);
         return blogUpdateEntryListPage;
     }
 
-    public BlogUpdateEntry parserUpdateEntry(Element el) throws NumberFormatException, BlogParsingException {
 
+    private BlogUpdateEntry parseUpdateEntry(Element el) throws NumberFormatException, BlogParsingException {
         int valveId = parseValveId(el);
         String title = parseTitle(el);
         LocalDate postDate = parsePostDate(el);
         String content = parseContent(el);
-
-
-        System.out.println(valveId);
-        System.out.println(title);
-        System.out.println(postDate);
-        System.out.println(content);
-
 
         return new BlogUpdateEntry(valveId, title, content, postDate);
     }

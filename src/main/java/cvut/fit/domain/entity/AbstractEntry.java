@@ -1,9 +1,14 @@
 package cvut.fit.domain.entity;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 //import java.sql.Date;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Created by Jakub Tuček on 28.8.2016.
@@ -20,10 +25,12 @@ public abstract class AbstractEntry {
 
     private String title;
 
+    @Type(type = "text")
     private String content;
 
-    private LocalDate posted;
-    private LocalDate created;
+    private Date posted;
+
+    private Timestamp created;
 
 
     public AbstractEntry() {
@@ -31,12 +38,11 @@ public abstract class AbstractEntry {
 
 
     public AbstractEntry(Integer valveId, String title, String content, LocalDate posted) {
-
         this.valveId = valveId;
         this.title = title;
         this.content = content;
-        this.posted = posted;
-        this.created = LocalDate.now();
+        this.posted = Date.valueOf(posted);
+        this.created = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Integer getId() {
@@ -71,19 +77,31 @@ public abstract class AbstractEntry {
         this.content = content;
     }
 
-    public LocalDate getCreated() {
-        return created;
+    public LocalDateTime getCreated() {
+        return created.toLocalDateTime();
     }
 
-    public void setCreated(LocalDate created) {
-        this.created = created;
+    public void setCreated(LocalDateTime created) {
+        this.created = Timestamp.valueOf(created);
     }
 
     public LocalDate getPosted() {
-        return posted;
+        return posted.toLocalDate();
     }
 
     public void setPosted(LocalDate posted) {
-        this.posted = posted;
+        this.posted = Date.valueOf(posted);
+    }
+
+    @Override
+    public String toString() {
+        return "AbstractEntry{" +
+                "id=" + id +
+                ", valveId=" + valveId +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", posted=" + posted +
+                ", created=" + created +
+                '}';
     }
 }

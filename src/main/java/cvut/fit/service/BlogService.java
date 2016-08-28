@@ -35,8 +35,10 @@ public class BlogService {
             Document html = Jsoup.connect(BlogConfig.BLOG_UPDATE_URL + i).userAgent(BlogConfig.USER_AGENT).header("Accept-Language", BlogConfig.HEADER_ACCEPT_LANG).get();
 
             List<BlogUpdateEntry> blogUpdateEntryListPage = blogParser.parseUpdatePage(html);
-            blogEntryList.addAll(blogUpdateEntryListPage);
 
+          //  if (blogUpdateEntryListPage.size() == 0) break;
+
+            blogEntryList.addAll(blogUpdateEntryListPage);
         }
 
         return blogEntryList;
