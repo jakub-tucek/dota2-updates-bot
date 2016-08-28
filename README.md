@@ -1,0 +1,1 @@
+# dota2-updates-bot
