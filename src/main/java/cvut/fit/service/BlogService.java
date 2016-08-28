@@ -36,7 +36,7 @@ public class BlogService {
 
             List<BlogUpdateEntry> blogUpdateEntryListPage = blogParser.parseUpdatePage(html);
 
-          //  if (blogUpdateEntryListPage.size() == 0) break;
+            if (blogUpdateEntryListPage.size() == 0) break;
 
             blogEntryList.addAll(blogUpdateEntryListPage);
         }

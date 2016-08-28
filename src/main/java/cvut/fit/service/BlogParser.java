@@ -40,15 +40,16 @@ public class BlogParser {
             BlogUpdateEntry blogUpdateEntry = parseUpdateEntry(entry);
             List<BlogUpdateEntry> bl = blogUpdateEntryRepository.findByValveId(blogUpdateEntry.getValveId());
 
-            blogUpdateEntryListPage.add(parseUpdateEntry(entry));
 
-         //   if (bl.size() == 0) {
-                blogUpdateEntryRepository.save(blogUpdateEntry);
-          //      break;
-         //   }
+            if (bl.size() != 0) {
+                log.info("Found collision in valve id");
+                break;
+            }
+
+            blogUpdateEntryListPage.add(parseUpdateEntry(entry));
+            blogUpdateEntryRepository.save(blogUpdateEntry);
         }
 
-        System.out.println(blogUpdateEntryListPage);
         return blogUpdateEntryListPage;
     }
 
