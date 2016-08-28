@@ -12,7 +12,5 @@ public class BlogEntry extends AbstractEntry {
     public BlogEntry() {
     }
 
-    public BlogEntry(Integer valveId, String title, String content, LocalDate posted) {
-        super(valveId, title, content, posted);
-    }
+
 }

@@ -14,7 +14,8 @@ public class BlogUpdateEntry extends AbstractEntry {
 
     }
 
-    public BlogUpdateEntry(Integer valveId, String title, String content, LocalDate posted) {
-        super(valveId, title, content, posted);
+
+    public BlogUpdateEntry(Integer valveId, String title, String author, String content, LocalDate posted) {
+        super(valveId, title, author, content, posted);
     }
 }

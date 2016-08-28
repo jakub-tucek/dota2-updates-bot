@@ -1,5 +1,6 @@
 package cvut.fit.service;
 
+import cvut.fit.domain.entity.BlogEntry;
 import cvut.fit.domain.entity.BlogUpdateEntry;
 import cvut.fit.domain.repository.BlogUpdateEntryRepository;
 import org.jsoup.nodes.Document;
@@ -40,12 +41,10 @@ public class BlogParser {
             BlogUpdateEntry blogUpdateEntry = parseUpdateEntry(entry);
             List<BlogUpdateEntry> bl = blogUpdateEntryRepository.findByValveId(blogUpdateEntry.getValveId());
 
-
             if (bl.size() != 0) {
                 log.info("Found collision in valve id");
                 break;
             }
-
             blogUpdateEntryListPage.add(parseUpdateEntry(entry));
             blogUpdateEntryRepository.save(blogUpdateEntry);
         }
@@ -53,14 +52,23 @@ public class BlogParser {
         return blogUpdateEntryListPage;
     }
 
+    public List<BlogEntry> parseBlogPage(Document html) {
+
+        return null;
+    }
+
 
     private BlogUpdateEntry parseUpdateEntry(Element el) throws NumberFormatException, BlogParsingException {
         int valveId = parseValveId(el);
         String title = parseTitle(el);
-        LocalDate postDate = parsePostDate(el);
+
+        String[] postDateAuthorPartSplit = parsePostDateAuthor(el);
+        LocalDate postDate = parsePostDateString(postDateAuthorPartSplit[0]);
+        String author = parserAuthorString(postDateAuthorPartSplit[1]);
+
         String content = parseContent(el);
 
-        return new BlogUpdateEntry(valveId, title, content, postDate);
+        return new BlogUpdateEntry(valveId, title, author, content, postDate);
     }
 
     /**
@@ -97,31 +105,37 @@ public class BlogParser {
 
 
     /**
-     * Parse posted date.
+     * Parse part where date and author is.
      *
      * @param entry
-     * @return
+     * @return dat
      * @throws BlogParsingException
      */
-    private LocalDate parsePostDate(Element entry) throws BlogParsingException {
-        Elements postDateEl = entry.select(BlogConfig.POST_DATE_SELECTOR);
+
+    private String[] parsePostDateAuthor(Element entry) throws BlogParsingException {
+        Elements postDateEl = entry.select(BlogConfig.POST_DATE_AUTHOR_SELECTOR);
         if (postDateEl == null) throw new BlogParsingException("Date class missing");
         if (postDateEl.size() > 1) throw new BlogParsingException("Too many date classes");
 
 
         String dateString = postDateEl.html();
         String[] dateStringSplit = dateString.split("\\s-+");
+        if (dateStringSplit.length != 2) throw new BlogParsingException("Invalid date");
+
+        return dateStringSplit;
+    }
+
+    private String parserAuthorString(String author) {
+        return author.substring(BlogConfig.AUTHOR_OFFSET);
+    }
+
+    private LocalDate parsePostDateString(String postDateString) throws BlogParsingException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(BlogConfig.DATE_FORMAT, Locale.ENGLISH);
-
-        if (dateStringSplit.length < 1) throw new BlogParsingException("Invalid date");
-
         try {
-            return LocalDate.parse(dateStringSplit[0], formatter);
+            return LocalDate.parse(postDateString, formatter);
         } catch (DateTimeParseException ex) {
             throw new BlogParsingException("Invalid date(" + ex + ")");
         }
-
-
     }
 
     /**
@@ -138,5 +152,6 @@ public class BlogParser {
 
         return contentEl.html().replaceAll("\\<.*?>", "");
     }
+
 
 }

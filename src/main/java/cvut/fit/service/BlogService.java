@@ -1,5 +1,6 @@
 package cvut.fit.service;
 
+import cvut.fit.domain.entity.BlogEntry;
 import cvut.fit.domain.entity.BlogUpdateEntry;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,9 +28,8 @@ public class BlogService {
     }
 
 
-    public List<BlogUpdateEntry> downloadAll() throws IOException, BlogParsingException {
+    public List<BlogUpdateEntry> downloadAllUpdates() throws IOException, BlogParsingException {
         List<BlogUpdateEntry> blogEntryList = new ArrayList<>();
-
 
         for (int i = 1; i <= BlogConfig.BLOG_UPDATE_MAX_PAGES; i++) {
             Document html = Jsoup.connect(BlogConfig.BLOG_UPDATE_URL + i).userAgent(BlogConfig.USER_AGENT).header("Accept-Language", BlogConfig.HEADER_ACCEPT_LANG).get();
@@ -39,6 +39,22 @@ public class BlogService {
             if (blogUpdateEntryListPage.size() == 0) break;
 
             blogEntryList.addAll(blogUpdateEntryListPage);
+        }
+
+        return blogEntryList;
+    }
+
+    public List<BlogEntry> downloadAllBlogs() throws IOException, BlogParsingException {
+        List<BlogEntry> blogEntryList = new ArrayList<>();
+
+        for (int i = 1; i <= BlogConfig.BLOG_UPDATE_MAX_PAGES; i++) {
+            Document html = Jsoup.connect(BlogConfig.BLOG_UPDATE_URL + i).userAgent(BlogConfig.USER_AGENT).header("Accept-Language", BlogConfig.HEADER_ACCEPT_LANG).get();
+
+            List<BlogEntry> blogEntryListPage = blogParser.parseBlogPage(html);
+
+            if (blogEntryListPage.size() == 0) break;
+
+            blogEntryList.addAll(blogEntryListPage);
         }
 
         return blogEntryList;

@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8"/>
-<title>Title</title>
+    <meta charset="UTF-8"/>
+    <title>Everything u need on one page</title>
 </head>
 <body>
-<h1>Hello world</h1>
-<p>
-    This is sparta.
-</p>
+<h1>Dota Place</h1>
+<div th:each="entry : ${blogUpdateEntries}">
+    <h2 th:text="${entry.title}"></h2>
+    <span th:text="${entry.posted}"></span>
+    <p th:text="${entry.content}"></p>
+    <span th:text="${entry.created}"></span>
+</div>
+
 </body>
 </html>

@@ -1,5 +1,6 @@
 package cvut.fit.controllers;
 
+import cvut.fit.domain.entity.BlogUpdateEntry;
 import cvut.fit.service.BlogParsingException;
 import cvut.fit.service.BlogService;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Jakub Tuček on 28.8.2016.
@@ -28,7 +30,9 @@ public class IndexController {
     @RequestMapping("/")
     public String index(Model model) {
         try {
-            blogService.downloadAll();
+            List<BlogUpdateEntry> blogUpdateEntries = blogService.downloadAllUpdates();
+            System.out.println(blogUpdateEntries);
+            model.addAttribute("blogUpdateEntries", blogUpdateEntries);
         } catch (BlogParsingException | IOException ex) {
             log.error(ex.toString());
         }
