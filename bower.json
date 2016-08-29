@@ -1,0 +1,21 @@
+{
+  "name": "dota2-updates-bot",
+  "homepage": "https://github.com/jakub-tucek/dota2-updates-bot",
+  "authors": [
+    "Jakub Tuček <jakub.tucek@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src/main/resources/static"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

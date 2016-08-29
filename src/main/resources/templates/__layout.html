@@ -1,0 +1,34 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+
+<head th:fragment="headerFragment">
+    <title>Everything u need on one page</title>
+
+    <link rel="stylesheet" href="../static/bootstrap/dist/css/bootstrap.min.css"
+          th:href="@{/bootstrap/dist/css/bootstrap.min.css}"/>
+</head>
+<body>
+
+<div th:fragment="alert (type, message)"
+     class="alert alert-dismissable" th:classappend="'alert-' + ${type}">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <span th:text="${message}">Test</span>
+</div>
+
+<div id="wrapper">
+
+
+</div>
+<!-- /#wrapper -->
+
+<div th:fragment="footerScriptsFragment">
+    <!-- jQuery -->
+    <script rel="stylesheet" href="../static/jquery/dist/jquery.min.js"
+          th:href="@{/jquery/dist/jquery.min.js}"/>
+
+</div>
+
+</body>
+
+</html>
