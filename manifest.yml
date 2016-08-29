@@ -1,0 +1,5 @@
+---
+applications:
+  - name: dota2-bot
+    buildpack: java_buildpack
+    path: target/dota2-updates-bot-0.0.1-SNAPSHOT.war
