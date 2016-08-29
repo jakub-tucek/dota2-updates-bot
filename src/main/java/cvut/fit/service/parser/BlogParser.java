@@ -110,8 +110,6 @@ public class BlogParser {
         Elements titleEl = entry.select(BlogConfig.TITLE_SELECTOR);
         Elements elTitleLink = titleEl.select("a");
 
-        System.out.println(elTitleLink.attr("href"));
-
         return elTitleLink.attr("href");
     }
 
@@ -125,7 +123,6 @@ public class BlogParser {
      */
     private int parseValveId(Element entry) throws NumberFormatException {
         String valveIdString = entry.attributes().get("id");
-        System.out.println(valveIdString);
         return Integer.parseInt(valveIdString.substring(BlogConfig.ENTRY_PREFIX_ID.length()));
     }
 
