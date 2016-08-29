@@ -9,28 +9,31 @@
     <!-- Navigation -->
     <nav th:replace="__layout :: navFragment">
     </nav>
+
+
+    <div class="container">
+        <div class="col-md-6">
+            <div th:each="entry : ${blogUpdateEntries}">
+                <h2 th:text="${entry.title}"></h2>
+                <span th:text="${entry.posted}"></span>
+                <p th:text="${entry.content}"></p>
+                <span th:text="${entry.created}"></span>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div th:each="entry : ${blogEntries}">
+                <h2 th:text="${entry.title}"></h2>
+                <span th:text="${entry.posted}"></span>
+                <p th:text="${entry.content}"></p>
+                <span th:text="${entry.created}"></span>
+            </div>
+        </div>
+    </div>
+
+
 </div>
 <!-- /#wrapper -->
-
-<div class="container">
-    <div class="col-md-6">
-        <div th:each="entry : ${blogUpdateEntries}">
-            <h2 th:text="${entry.title}"></h2>
-            <span th:text="${entry.posted}"></span>
-            <p th:text="${entry.content}"></p>
-            <span th:text="${entry.created}"></span>
-        </div>
-    </div>
-
-    <div class="col-md-6">
-        <div th:each="entry : ${blogEntries}">
-            <h2 th:text="${entry.title}"></h2>
-            <span th:text="${entry.posted}"></span>
-            <p th:text="${entry.content}"></p>
-            <span th:text="${entry.created}"></span>
-        </div>
-    </div>
-</div>
 
 
 <div th:replace="__layout :: footerScriptsFragment">

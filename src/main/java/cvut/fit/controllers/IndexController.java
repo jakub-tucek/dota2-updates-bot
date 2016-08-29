@@ -30,6 +30,17 @@ public class IndexController {
 
     @RequestMapping("/")
     public String index(Model model) {
+        Iterable<BlogUpdateEntry> blogUpdateEntries = blogService.getAllBlogUpdates();
+        model.addAttribute("blogUpdateEntries", blogUpdateEntries);
+
+        Iterable<BlogEntry> blogEntries = blogService.getAllBlog();
+        model.addAttribute("blogEntries", blogEntries);
+
+        return "index";
+    }
+
+    @RequestMapping("/reload")
+    public String reload(Model model) {
         try {
             List<BlogUpdateEntry> blogUpdateEntries = blogService.downloadAllBlogUpdates();
             model.addAttribute("blogUpdateEntries", blogUpdateEntries);
@@ -45,24 +56,18 @@ public class IndexController {
 
     @RequestMapping("/updates")
     public String updates(Model model) {
-        try {
 
-            Iterable<BlogUpdateEntry> blogUpdateEntries = blogService.getAllBlogUpdates();
-            model.addAttribute("blogUpdateEntries", blogUpdateEntries);
-        } catch (BlogParsingException | IOException ex) {
-            log.error(ex.toString());
-        }
+        Iterable<BlogUpdateEntry> blogUpdateEntries = blogService.getAllBlogUpdates();
+        model.addAttribute("blogUpdateEntries", blogUpdateEntries);
+
         return "index";
     }
 
     @RequestMapping("/blog")
     public String blog(Model model) {
-        try {
-            Iterable<BlogEntry> blogEntries = blogService.getAllBlog();
-            model.addAttribute("blogEntries", blogEntries);
-        } catch (BlogParsingException | IOException ex) {
-            log.error(ex.toString());
-        }
+        Iterable<BlogEntry> blogEntries = blogService.getAllBlog();
+        model.addAttribute("blogEntries", blogEntries);
+
         return "index";
     }
 }
