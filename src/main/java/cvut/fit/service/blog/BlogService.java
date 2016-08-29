@@ -1,11 +1,11 @@
-package cvut.fit.service;
+package cvut.fit.service.blog;
 
 import cvut.fit.domain.entity.BlogEntry;
 import cvut.fit.domain.entity.BlogUpdateEntry;
 import cvut.fit.domain.repository.BlogEntryRepository;
 import cvut.fit.domain.repository.BlogUpdateEntryRepository;
-import cvut.fit.service.parser.BlogParser;
-import cvut.fit.service.parser.BlogParsingException;
+import cvut.fit.service.blog.parser.BlogParser;
+import cvut.fit.service.blog.parser.BlogParsingException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;

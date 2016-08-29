@@ -1,4 +1,4 @@
-package cvut.fit.service.parser;
+package cvut.fit.service.blog.parser;
 
 /**
  * Created by Jakub Tuček on 28.8.2016.

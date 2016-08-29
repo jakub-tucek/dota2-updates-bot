@@ -1,7 +1,7 @@
 package cvut.fit.task;
 
 import cvut.fit.config.SchedulerStatusConfig;
-import cvut.fit.service.BlogService;
+import cvut.fit.service.blog.BlogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
