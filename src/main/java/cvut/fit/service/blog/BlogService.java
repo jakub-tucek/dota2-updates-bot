@@ -44,18 +44,19 @@ public class BlogService {
 
         for (int i = 1; i <= BlogConfig.BLOG_UPDATE_MAX_PAGES; i++) {
 
-//            setProxy();
+//          setProxy();
 
             Document html = Jsoup.connect(BlogConfig.BLOG_UPDATE_URL + i).userAgent(BlogConfig.USER_AGENT).header("Accept-Language", BlogConfig.HEADER_ACCEPT_LANG).get();
 
             List<BlogUpdateEntry> basicBlogEntryListPage = blogParser.parseUpdatePage(html);
 
             if (basicBlogEntryListPage.size() == 0) break;
-            basicBlogEntryListPage.forEach(blogUpdateEntryRepository::save);
 
             blogEntryList.addAll(basicBlogEntryListPage);
         }
-
+        for (int i = blogEntryList.size() - 1; i >= 0; i--) {
+            blogUpdateEntryRepository.save(blogEntryList.get(i));
+        }
         return blogEntryList;
     }
 
@@ -65,15 +66,18 @@ public class BlogService {
 //        setProxy();
 
         for (int i = 1; i <= BlogConfig.BLOG_MAX_PAGES; i++) {
-            Document html = Jsoup.connect(BlogConfig.BLOG_URL).userAgent(BlogConfig.USER_AGENT).header("Accept-Language", BlogConfig.HEADER_ACCEPT_LANG).get();
+            Document html = Jsoup.connect(BlogConfig.BLOG_URL + i).userAgent(BlogConfig.USER_AGENT).header("Accept-Language", BlogConfig.HEADER_ACCEPT_LANG).get();
 
             List<BlogEntry> blogEntryListPage = blogParser.parseBlogPage(html);
 
             if (blogEntryListPage.size() == 0) break;
-            blogEntryListPage.forEach(blogEntryRepository::save);
-
             blogEntryList.addAll(blogEntryListPage);
         }
+
+        for (int i = blogEntryList.size() - 1; i >= 0; i--) {
+            blogEntryRepository.save(blogEntryList.get(i));
+        }
+
         return blogEntryList;
     }
 
