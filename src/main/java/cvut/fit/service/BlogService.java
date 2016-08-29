@@ -89,12 +89,12 @@ public class BlogService {
      * PERSISTENCE
      */
 
-    public Iterable<BlogUpdateEntry> getAllBlogUpdates() throws BlogParsingException, IOException {
+    public Iterable<BlogUpdateEntry> getAllBlogUpdates() {
         return blogUpdateEntryRepository.findAll();
     }
 
 
-    public Iterable<BlogEntry> getAllBlog() throws BlogParsingException, IOException {
+    public Iterable<BlogEntry> getAllBlog() {
         return blogEntryRepository.findAll();
     }
 }
