@@ -47,20 +47,35 @@ public class IndexController {
 
     @RequestMapping("/reload")
     public String reload(Model model) {
+
+        List<BlogUpdateEntry> blogUpdateEntries = null;
         try {
-            List<BlogUpdateEntry> blogUpdateEntries = downloaderBlogService.downloadBlogUpdates();
-            model.addAttribute("blogUpdateEntries", blogUpdateEntries);
-
-            List<BlogEntry> blogEntries = downloaderBlogService.downloadBlog();
-            model.addAttribute("blogEntries", blogEntries);
-
-            List<RedditEntry> redditSirBelvederEntries = downloaderRedditService.downloadSirBelvedere();
-            model.addAttribute(redditSirBelvederEntries);
-
-        } catch (BlogParsingException | RedditParsingException | IOException ex) {
-            ex.printStackTrace();
-            log.error(ex.toString());
+            blogUpdateEntries = downloaderBlogService.downloadBlogUpdates();
+        } catch (IOException | BlogParsingException e) {
+            e.printStackTrace();
+            log.error(e.toString());
         }
+        model.addAttribute("blogUpdateEntries", blogUpdateEntries);
+
+
+        List<BlogEntry> blogEntries = null;
+        try {
+            blogEntries = downloaderBlogService.downloadBlog();
+        } catch (IOException | BlogParsingException e) {
+            e.printStackTrace();
+            log.error(e.toString());
+        }
+        model.addAttribute("blogEntries", blogEntries);
+
+
+        List<RedditEntry> redditSirBelvedereEntries = null;
+        try {
+            redditSirBelvedereEntries = downloaderRedditService.downloadSirBelvedere();
+        } catch (IOException | RedditParsingException e) {
+            e.printStackTrace();
+            log.error(e.toString());
+        }
+        model.addAttribute("redditSirBelvedereEntries", redditSirBelvedereEntries);
         return "index";
     }
 
