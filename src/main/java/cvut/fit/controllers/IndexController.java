@@ -6,6 +6,7 @@ import cvut.fit.domain.entity.RedditEntry;
 import cvut.fit.service.blog.BlogParsingException;
 import cvut.fit.service.blog.DownloaderBlogService;
 import cvut.fit.service.reddit.DownloaderRedditService;
+import cvut.fit.service.reddit.RedditParsingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,8 @@ public class IndexController {
             List<RedditEntry> redditSirBelvederEntries = downloaderRedditService.downloadSirBelvedere();
             model.addAttribute(redditSirBelvederEntries);
 
-        } catch (BlogParsingException | IOException ex) {
+        } catch (BlogParsingException | RedditParsingException | IOException ex) {
+            ex.printStackTrace();
             log.error(ex.toString());
         }
         return "index";
@@ -79,10 +81,11 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping("/reddit")
+    @RequestMapping("/redditSirBelvedere")
     public String reddit(Model model) {
-        Iterable<BlogEntry> redditSirBelvedereEntries = downloaderRedditService.getAllSirBelvedere();
+        Iterable<RedditEntry> redditSirBelvedereEntries = downloaderRedditService.getAllSirBelvedere();
         model.addAttribute(redditSirBelvedereEntries);
+
         return "index";
     }
 }
