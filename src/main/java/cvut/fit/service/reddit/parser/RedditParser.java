@@ -1,7 +1,6 @@
 package cvut.fit.service.reddit.parser;
 
 import cvut.fit.domain.entity.RedditEntry;
-import cvut.fit.domain.repository.RedditEntryRepository;
 import cvut.fit.service.reddit.DownloaderRedditConfig;
 import cvut.fit.service.reddit.RedditParsingException;
 import org.jsoup.nodes.Document;
@@ -9,7 +8,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,15 +20,6 @@ import java.util.Locale;
 @Service
 public class RedditParser {
     private static final Logger log = LoggerFactory.getLogger(RedditParser.class);
-
-
-    private final RedditEntryRepository redditEntryRepository;
-
-    @Autowired
-    public RedditParser(RedditEntryRepository redditEntryRepository) {
-        this.redditEntryRepository = redditEntryRepository;
-    }
-
 
     public Elements parseUserSubmittedPage(Document html) {
         return html.select("div[class^=entry]");
