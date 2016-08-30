@@ -42,6 +42,9 @@ public class IndexController {
         Iterable<BlogEntry> blogEntries = downloaderBlogService.getAllBlog();
         model.addAttribute("blogEntries", blogEntries);
 
+        Iterable<RedditEntry> redditSirBelvedereEntries = downloaderRedditService.getAllSirBelvedere();
+        model.addAttribute("redditSirBelvedereEntries", redditSirBelvedereEntries);
+
         return "index";
     }
 
@@ -99,7 +102,7 @@ public class IndexController {
     @RequestMapping("/redditSirBelvedere")
     public String reddit(Model model) {
         Iterable<RedditEntry> redditSirBelvedereEntries = downloaderRedditService.getAllSirBelvedere();
-        model.addAttribute(redditSirBelvedereEntries);
+        model.addAttribute("redditSirBelvedereEntries", redditSirBelvedereEntries);
 
         return "index";
     }
