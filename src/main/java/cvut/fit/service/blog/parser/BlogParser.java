@@ -194,7 +194,8 @@ public class BlogParser {
         if (contentEl == null) throw new BlogParsingException("Content class missing");
         if (contentEl.size() > 1) throw new BlogParsingException("Too many content classes");
 
-        return contentEl.html().replaceAll("\\<.*?>", "");
+        // return contentEl.html().replaceAll("\\<.*?>", ""); //removing html tags
+        return contentEl.html();
     }
 
 
