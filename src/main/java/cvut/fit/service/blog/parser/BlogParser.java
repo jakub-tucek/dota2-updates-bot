@@ -5,7 +5,7 @@ import cvut.fit.domain.entity.BlogEntry;
 import cvut.fit.domain.entity.BlogUpdateEntry;
 import cvut.fit.domain.repository.BlogEntryRepository;
 import cvut.fit.domain.repository.BlogUpdateEntryRepository;
-import cvut.fit.service.blog.BlogConfig;
+import cvut.fit.service.blog.DownloaderBlogConfig;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -107,7 +107,7 @@ public class BlogParser {
     }
 
     private String parseUrl(Element entry) {
-        Elements titleEl = entry.select(BlogConfig.TITLE_SELECTOR);
+        Elements titleEl = entry.select(DownloaderBlogConfig.TITLE_SELECTOR);
         Elements elTitleLink = titleEl.select("a");
 
         return elTitleLink.attr("href");
@@ -123,7 +123,7 @@ public class BlogParser {
      */
     private int parseValveId(Element entry) throws NumberFormatException {
         String valveIdString = entry.attributes().get("id");
-        return Integer.parseInt(valveIdString.substring(BlogConfig.ENTRY_PREFIX_ID.length()));
+        return Integer.parseInt(valveIdString.substring(DownloaderBlogConfig.ENTRY_PREFIX_ID.length()));
     }
 
     /**
@@ -134,7 +134,7 @@ public class BlogParser {
      * @throws BlogParsingException
      */
     private String parseTitle(Element entry) throws BlogParsingException {
-        Elements titleEl = entry.select(BlogConfig.TITLE_SELECTOR);
+        Elements titleEl = entry.select(DownloaderBlogConfig.TITLE_SELECTOR);
         if (titleEl == null) throw new BlogParsingException("Title class missing");
         if (titleEl.size() > 1) throw new BlogParsingException("Too many titles");
 
@@ -156,7 +156,7 @@ public class BlogParser {
      */
 
     private String[] parsePostDateAuthor(Element entry) throws BlogParsingException {
-        Elements postDateEl = entry.select(BlogConfig.POST_DATE_AUTHOR_SELECTOR);
+        Elements postDateEl = entry.select(DownloaderBlogConfig.POST_DATE_AUTHOR_SELECTOR);
         if (postDateEl == null) throw new BlogParsingException("Date class missing");
         if (postDateEl.size() > 1) throw new BlogParsingException("Too many date classes");
 
@@ -169,11 +169,11 @@ public class BlogParser {
     }
 
     private String parseAuthorString(String author) {
-        return author.substring(BlogConfig.AUTHOR_OFFSET);
+        return author.substring(DownloaderBlogConfig.AUTHOR_OFFSET);
     }
 
     private LocalDate parsePostDateString(String postDateString) throws BlogParsingException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(BlogConfig.DATE_FORMAT, Locale.ENGLISH);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DownloaderBlogConfig.DATE_FORMAT, Locale.ENGLISH);
         try {
             return LocalDate.parse(postDateString, formatter);
         } catch (DateTimeParseException ex) {
@@ -189,7 +189,7 @@ public class BlogParser {
      * @throws BlogParsingException
      */
     private String parseContent(Element entry) throws BlogParsingException {
-        Elements contentEl = entry.select(BlogConfig.CONTENT_SELECTOR);
+        Elements contentEl = entry.select(DownloaderBlogConfig.CONTENT_SELECTOR);
         if (contentEl == null) throw new BlogParsingException("Content class missing");
         if (contentEl.size() > 1) throw new BlogParsingException("Too many content classes");
 

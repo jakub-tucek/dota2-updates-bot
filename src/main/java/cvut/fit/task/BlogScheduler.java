@@ -1,7 +1,7 @@
 package cvut.fit.task;
 
 import cvut.fit.config.SchedulerStatusConfig;
-import cvut.fit.service.blog.BlogService;
+import cvut.fit.service.blog.DownloaderBlogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,12 @@ import org.springframework.stereotype.Component;
 public class BlogScheduler {
     private static final Logger log = LoggerFactory.getLogger(BlogScheduler.class);
 
-    private final BlogService blogService;
+    private final DownloaderBlogService downloaderBlogService;
     private final SchedulerStatusConfig schedulerStatusConfig;
 
     @Autowired
-    public BlogScheduler(BlogService blogService, SchedulerStatusConfig schedulerStatusConfig) {
-        this.blogService = blogService;
+    public BlogScheduler(DownloaderBlogService downloaderBlogService, SchedulerStatusConfig schedulerStatusConfig) {
+        this.downloaderBlogService = downloaderBlogService;
         this.schedulerStatusConfig = schedulerStatusConfig;
     }
 

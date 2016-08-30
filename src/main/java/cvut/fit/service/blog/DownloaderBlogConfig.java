@@ -3,21 +3,7 @@ package cvut.fit.service.blog;
 /**
  * Created by Jakub Tuček on 28.8.2016.
  */
-public class BlogConfig {
-
-    public final static String PROXY = "31.31.73.195";
-//    public final static int PORT = 80;
-    public final static String PORT = "3128";
-
-
-    /**
-     * Basic config
-     */
-
-    public final static String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0";
-
-    public final static String HEADER_ACCEPT_LANG = "en-US";
-
+public class DownloaderBlogConfig {
 
     /**
      * Update part config

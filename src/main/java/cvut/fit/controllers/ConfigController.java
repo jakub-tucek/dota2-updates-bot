@@ -30,7 +30,6 @@ public class ConfigController {
 
     @RequestMapping("")
     String config(Model model) {
-
         model.addAttribute("blogSchedulerStatus", schedulerStatusConfig.isBlogSchedulerStatus());
 
         return "config";
