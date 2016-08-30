@@ -11,7 +11,6 @@ import java.util.Collection;
 @Entity
 public class User {
 
-
     @Id
     private String username;
 
@@ -21,7 +20,6 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private Collection<UserRole> userRoles;
-
 
     public User() {
     }

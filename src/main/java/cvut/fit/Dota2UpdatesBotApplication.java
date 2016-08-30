@@ -15,11 +15,9 @@ public class Dota2UpdatesBotApplication extends SpringBootServletInitializer {
         SpringApplication.run(Dota2UpdatesBotApplication.class, args);
     }
 
-
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(Dota2UpdatesBotApplication.class);
     }
-
 
 }

@@ -11,8 +11,6 @@ public class SchedulerStatusConfig {
 
     private boolean blogSchedulerStatus = false;
 
-
-
     public boolean isBlogSchedulerStatus() {
         return blogSchedulerStatus;
     }

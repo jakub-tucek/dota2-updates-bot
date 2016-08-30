@@ -100,7 +100,6 @@ public class BlogParser {
         return new BlogEntry(valveId, title, author, content, postDate);
     }
 
-
     private void parseBlogEntry(Element entry, BlogEntry blogEntry) throws NumberFormatException, BlogParsingException {
         blogEntry.setUrl(parseUrl(entry));
 
@@ -112,7 +111,6 @@ public class BlogParser {
 
         return elTitleLink.attr("href");
     }
-
 
     /**
      * Parse valve internal entry id.
@@ -145,7 +143,6 @@ public class BlogParser {
 
         return elTitleLink.html();
     }
-
 
     /**
      * Parse part where date and author is.

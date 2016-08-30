@@ -18,5 +18,4 @@ import java.util.concurrent.Executors;
 public class AppConfig {
 
 
-
 }

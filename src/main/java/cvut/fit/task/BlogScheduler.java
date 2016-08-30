@@ -24,7 +24,6 @@ public class BlogScheduler {
         this.schedulerStatusConfig = schedulerStatusConfig;
     }
 
-
     @Scheduled(fixedRate = 10000)
     public void updateDataFromBlog() {
         if (schedulerStatusConfig.isBlogSchedulerStatus()) {

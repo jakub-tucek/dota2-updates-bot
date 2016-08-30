@@ -39,7 +39,6 @@ public class DownloaderBlogService {
         this.blogEntryRepository = blogEntryRepository;
     }
 
-
     public List<BlogUpdateEntry> downloadAllBlogUpdates() throws IOException, BlogParsingException {
         List<BlogUpdateEntry> blogEntryList = new ArrayList<>();
 
@@ -63,7 +62,6 @@ public class DownloaderBlogService {
 
     public List<BlogEntry> downloadAllBlog() throws IOException, BlogParsingException {
         List<BlogEntry> blogEntryList = new ArrayList<>();
-
 //        setProxy();
 
         for (int i = 1; i <= DownloaderBlogConfig.BLOG_MAX_PAGES; i++) {

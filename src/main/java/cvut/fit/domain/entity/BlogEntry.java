@@ -12,7 +12,6 @@ public class BlogEntry extends AbstractEntry {
 
     private String url;
 
-
     public BlogEntry() {
     }
 

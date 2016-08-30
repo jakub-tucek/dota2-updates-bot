@@ -37,7 +37,6 @@ public class AbstractEntry {
     public AbstractEntry() {
     }
 
-
     public AbstractEntry(Integer valveId, String title, String author, String content, LocalDate posted) {
         this.valveId = valveId;
         this.title = title;
