@@ -2,8 +2,10 @@ package cvut.fit.controllers;
 
 import cvut.fit.domain.entity.BlogEntry;
 import cvut.fit.domain.entity.BlogUpdateEntry;
+import cvut.fit.domain.entity.RedditEntry;
 import cvut.fit.service.blog.BlogParsingException;
 import cvut.fit.service.blog.DownloaderBlogService;
+import cvut.fit.service.reddit.DownloaderRedditService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,12 @@ public class IndexController {
 
     private final DownloaderBlogService downloaderBlogService;
 
+    private final DownloaderRedditService downloaderRedditService;
+
     @Autowired
-    public IndexController(DownloaderBlogService downloaderBlogService) {
+    public IndexController(DownloaderBlogService downloaderBlogService, DownloaderRedditService downloaderRedditService) {
         this.downloaderBlogService = downloaderBlogService;
+        this.downloaderRedditService = downloaderRedditService;
     }
 
     @RequestMapping("/")
@@ -42,11 +47,14 @@ public class IndexController {
     @RequestMapping("/reload")
     public String reload(Model model) {
         try {
-            List<BlogUpdateEntry> blogUpdateEntries = downloaderBlogService.downloadAllBlogUpdates();
+            List<BlogUpdateEntry> blogUpdateEntries = downloaderBlogService.downloadBlogUpdates();
             model.addAttribute("blogUpdateEntries", blogUpdateEntries);
 
-            List<BlogEntry> blogEntries = downloaderBlogService.downloadAllBlog();
+            List<BlogEntry> blogEntries = downloaderBlogService.downloadBlog();
             model.addAttribute("blogEntries", blogEntries);
+
+            List<RedditEntry> redditSirBelvederEntries = downloaderRedditService.downloadSirBelvedere();
+            model.addAttribute(redditSirBelvederEntries);
 
         } catch (BlogParsingException | IOException ex) {
             log.error(ex.toString());
@@ -68,6 +76,13 @@ public class IndexController {
         Iterable<BlogEntry> blogEntries = downloaderBlogService.getAllBlog();
         model.addAttribute("blogEntries", blogEntries);
 
+        return "index";
+    }
+
+    @RequestMapping("/reddit")
+    public String reddit(Model model) {
+        Iterable<BlogEntry> redditSirBelvedereEntries = downloaderRedditService.getAllSirBelvedere();
+        model.addAttribute(redditSirBelvedereEntries);
         return "index";
     }
 }

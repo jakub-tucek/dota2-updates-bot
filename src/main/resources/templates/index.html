@@ -12,18 +12,36 @@
 
 
     <div class="container">
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <h3>Blog</h3>
             <div th:each="entry : ${blogUpdateEntries}">
                 <h2 th:text="${entry.title}"></h2>
+                <span th:text="${entry.author}"></span>
+                <a th:href="${entry.url}"><span th:text="${entry.url}"> link </span></a>
                 <span th:text="${entry.posted}"></span>
                 <p th:text="${entry.content}"></p>
                 <span th:text="${entry.created}"></span>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div th:each="entry : ${blogEntries}">
+        <div class="col-md-4">
+            <h3>Blog update</h3>
+            <div th:each="entry : ${blogUpdateEntries}">
                 <h2 th:text="${entry.title}"></h2>
+                <span th:text="${entry.author}"></span>
+                <a th:href="${entry.url}"><span th:text="${entry.url}"> link </span></a>
+                <span th:text="${entry.posted}"></span>
+                <p th:text="${entry.content}"></p>
+                <span th:text="${entry.created}"></span>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <h3>Reddit /u/SirBelvedere</h3>
+            <div th:each="entry : ${redditSirBelvedereEntries}">
+                <h2 th:text="${entry.title}"></h2>
+                <span th:text="${entry.author}"></span>
+                <a th:href="${entry.url}"><span th:text="${entry.url}"> link </span></a>
                 <span th:text="${entry.posted}"></span>
                 <p th:text="${entry.content}"></p>
                 <span th:text="${entry.created}"></span>

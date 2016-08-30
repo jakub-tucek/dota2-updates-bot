@@ -38,7 +38,7 @@ public class DownloaderBlogService {
         this.blogEntryRepository = blogEntryRepository;
     }
 
-    public List<BlogUpdateEntry> downloadAllBlogUpdates() throws IOException, BlogParsingException {
+    public List<BlogUpdateEntry> downloadBlogUpdates() throws IOException, BlogParsingException {
         List<BlogUpdateEntry> blogEntryList = new ArrayList<>();
 
         for (int i = 1; i <= DownloaderBlogConfig.BLOG_UPDATE_MAX_PAGES; i++) {
@@ -59,7 +59,7 @@ public class DownloaderBlogService {
         return blogEntryList;
     }
 
-    public List<BlogEntry> downloadAllBlog() throws IOException, BlogParsingException {
+    public List<BlogEntry> downloadBlog() throws IOException, BlogParsingException {
         List<BlogEntry> blogEntryList = new ArrayList<>();
 //        setProxy();
 
