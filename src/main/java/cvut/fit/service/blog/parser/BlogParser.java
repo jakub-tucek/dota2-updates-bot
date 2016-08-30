@@ -57,7 +57,7 @@ public class BlogParser {
             List<BlogUpdateEntry> bl = blogUpdateEntryRepository.findByValveId(blogUpdateEntry.getValveId());
 
             if (bl.size() != 0) {
-                log.info("Found collision in valve id(update). Probably post is already saved - valveId=" + blogUpdateEntry.getValveId());
+                log.info("Found collision in valve id(update). Post is already saved - valveId=" + blogUpdateEntry.getValveId());
                 break;
             }
             basicBlogEntryListPage.add(blogUpdateEntry);
@@ -81,7 +81,7 @@ public class BlogParser {
             List<BlogEntry> bl = blogEntryRepository.findByValveId(blogEntry.getValveId());
 
             if (bl.size() != 0) {
-                log.info("Found collision in valve id(blog). Probably post is already saved - valveId=" + blogEntry.getValveId());
+                log.info("Found collision in valve id(blog). Post is already saved - valveId=" + blogEntry.getValveId());
                 break;
             }
             blogEntryListPage.add(blogEntry);
