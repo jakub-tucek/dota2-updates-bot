@@ -49,9 +49,9 @@ public class RedditParser {
         String subReddit = parseSubReddit(entry);
 
         if (timestamps[1] != null) {
-            return new RedditEntry(url, author, url, "", timestamps[0], timestamps[1], subReddit);
+            return new RedditEntry(title, author, url, "", timestamps[0], timestamps[1], subReddit);
         } else {
-            return new RedditEntry(url, author, url, "", timestamps[0], subReddit);
+            return new RedditEntry(title, author, url, "", timestamps[0], subReddit);
         }
     }
 
