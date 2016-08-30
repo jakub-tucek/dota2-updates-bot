@@ -26,7 +26,21 @@
                     </h3>
                 </div>
                 <div class="col-md-6">
-                    <a th:href="@{config/toggleTimer}" class="btn btn-info" role="button">Toggle blog scheduler</a>
+                    <a th:href="@{config/toggleBlogScheduler}" class="btn btn-info" role="button">Toggle blog scheduler</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <h3 th:if="${redditSchedulerStatus}">
+                        Running
+                    </h3>
+
+                    <h3 th:unless="${redditSchedulerStatus}">
+                        Stopped
+                    </h3>
+                </div>
+                <div class="col-md-6">
+                    <a th:href="@{config/toggleRedditScheduler}" class="btn btn-info" role="button">Toggle reddit scheduler</a>
                 </div>
             </div>
         </div>

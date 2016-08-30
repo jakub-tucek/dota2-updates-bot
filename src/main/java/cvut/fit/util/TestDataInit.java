@@ -2,7 +2,6 @@ package cvut.fit.util;
 
 import cvut.fit.domain.entity.User;
 import cvut.fit.domain.entity.UserRole;
-import cvut.fit.domain.entity.enums.Role;
 import cvut.fit.domain.repository.UserRepository;
 import cvut.fit.domain.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

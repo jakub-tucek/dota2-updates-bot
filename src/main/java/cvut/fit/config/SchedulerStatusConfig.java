@@ -1,6 +1,5 @@
 package cvut.fit.config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -10,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class SchedulerStatusConfig {
 
     private boolean blogSchedulerStatus = false;
+    private boolean redditSchedulerStatus = false;
 
     public boolean isBlogSchedulerStatus() {
         return blogSchedulerStatus;
@@ -17,5 +17,13 @@ public class SchedulerStatusConfig {
 
     public void setBlogSchedulerStatus(boolean blogSchedulerStatus) {
         this.blogSchedulerStatus = blogSchedulerStatus;
+    }
+
+    public boolean isRedditSchedulerStatus() {
+        return redditSchedulerStatus;
+    }
+
+    public void setRedditSchedulerStatus(boolean redditSchedulerStatus) {
+        this.redditSchedulerStatus = redditSchedulerStatus;
     }
 }
