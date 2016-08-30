@@ -7,13 +7,11 @@ import java.time.LocalDate;
  * Created by Jakub Tuček on 28.8.2016.
  */
 @Entity
-public class BlogUpdateEntry extends AbstractEntry {
-
+public class BlogUpdateEntry extends BlogEntry {
     public BlogUpdateEntry() {
-
     }
 
-    public BlogUpdateEntry(Integer valveId, String title, String author, String content, LocalDate posted) {
-        super(valveId, title, author, content, posted);
+    public BlogUpdateEntry(String title, String author, String url, String content, LocalDate posted, int valveId) {
+        super(title, author, url, content, posted, valveId);
     }
 }

@@ -2,13 +2,16 @@ package cvut.fit.domain.entity;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
-//import java.sql.Date;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.sql.Date;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+//import java.sql.Date;
 
 /**
  * Created by Jakub Tuček on 28.8.2016.
@@ -18,13 +21,13 @@ public class AbstractEntry {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    private Integer valveId;
+    private int id;
 
     private String title;
 
     private String author;
+
+    private String url;
 
     @Type(type = "text")
     private String content;
@@ -33,14 +36,13 @@ public class AbstractEntry {
 
     private Timestamp created;
 
-
     public AbstractEntry() {
     }
 
-    public AbstractEntry(Integer valveId, String title, String author, String content, LocalDate posted) {
-        this.valveId = valveId;
+    public AbstractEntry(String title, String author, String url, String content, LocalDate posted) {
         this.title = title;
         this.author = author;
+        this.url = url;
         this.content = content;
         this.posted = Date.valueOf(posted);
         this.created = Timestamp.valueOf(LocalDateTime.now());
@@ -52,14 +54,6 @@ public class AbstractEntry {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getValveId() {
-        return valveId;
-    }
-
-    public void setValveId(Integer valveId) {
-        this.valveId = valveId;
     }
 
     public String getTitle() {
@@ -76,6 +70,14 @@ public class AbstractEntry {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getContent() {
@@ -102,15 +104,4 @@ public class AbstractEntry {
         this.posted = Date.valueOf(posted);
     }
 
-    @Override
-    public String toString() {
-        return "AbstractEntry{" +
-                "id=" + id +
-                ", valveId=" + valveId +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", posted=" + posted +
-                ", created=" + created +
-                '}';
-    }
 }

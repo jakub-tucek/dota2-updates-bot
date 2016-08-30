@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Jakub Tuček on 28.8.2016.
@@ -50,14 +52,14 @@ public class BlogParser {
         List<BlogUpdateEntry> basicBlogEntryListPage = new ArrayList<>();
         Elements mainDiv = html.select("div[id^=post]");
         for (Element entry : mainDiv) {
-            BlogUpdateEntry basicBlogEntry = (BlogUpdateEntry) parseBasic(entry, true);
-            List<BlogUpdateEntry> bl = blogUpdateEntryRepository.findByValveId(basicBlogEntry.getValveId());
+            BlogUpdateEntry blogUpdateEntry = (BlogUpdateEntry) parseBasic(entry, true);
+            List<BlogUpdateEntry> bl = blogUpdateEntryRepository.findByValveId(blogUpdateEntry.getValveId());
 
             if (bl.size() != 0) {
-                log.info("Found collision in valve id(update)");
+                log.info("Found collision in valve id(update). Probably post is already saved - valveId=" + blogUpdateEntry.getValveId());
                 break;
             }
-            basicBlogEntryListPage.add(basicBlogEntry);
+            basicBlogEntryListPage.add(blogUpdateEntry);
         }
 
         return basicBlogEntryListPage;
@@ -78,7 +80,7 @@ public class BlogParser {
             List<BlogEntry> bl = blogEntryRepository.findByValveId(blogEntry.getValveId());
 
             if (bl.size() != 0) {
-                log.info("Found collision in valve id(blog)");
+                log.info("Found collision in valve id(blog). Probably post is already saved - valveId=" + blogEntry.getValveId());
                 break;
             }
             blogEntryListPage.add(blogEntry);
@@ -96,8 +98,9 @@ public class BlogParser {
 
         String content = parseContent(entry);
 
-        if (isBlogUpdate) return new BlogUpdateEntry(valveId, title, author, content, postDate);
-        return new BlogEntry(valveId, title, author, content, postDate);
+        String url = parseUrl(entry);
+
+        return new BlogUpdateEntry(title, author, url, content, postDate, valveId);
     }
 
     private void parseBlogEntry(Element entry, BlogEntry blogEntry) throws NumberFormatException, BlogParsingException {
