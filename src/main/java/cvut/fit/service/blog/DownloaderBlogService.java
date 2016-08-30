@@ -6,7 +6,6 @@ import cvut.fit.domain.repository.BlogEntryRepository;
 import cvut.fit.domain.repository.BlogUpdateEntryRepository;
 import cvut.fit.service.DownloaderConfig;
 import cvut.fit.service.blog.parser.BlogParser;
-import cvut.fit.service.blog.parser.BlogParsingException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;

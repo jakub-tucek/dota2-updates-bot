@@ -2,7 +2,7 @@ package cvut.fit.controllers;
 
 import cvut.fit.domain.entity.BlogEntry;
 import cvut.fit.domain.entity.BlogUpdateEntry;
-import cvut.fit.service.blog.parser.BlogParsingException;
+import cvut.fit.service.blog.BlogParsingException;
 import cvut.fit.service.blog.DownloaderBlogService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
