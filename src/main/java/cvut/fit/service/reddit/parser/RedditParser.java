@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -39,20 +38,15 @@ public class RedditParser {
 
     public RedditEntry parseUserSubmittedEntry(Element entry) throws RedditParsingException {
         String url = parseUrl(entry);
-        System.out.println(url);
 
         String title = parseTitle(entry);
-        System.out.println(title);
 
         String author = parseAuthor(entry);
-        System.out.println(author);
 
         //0: created, 1: edited
         LocalDateTime[] timestamps = parseTimestamps(entry);
-        System.out.println(Arrays.toString(timestamps));
 
         String subReddit = parseSubReddit(entry);
-        System.out.println(subReddit);
 
         if (timestamps[1] != null) {
             return new RedditEntry(url, author, url, "", timestamps[0], timestamps[1], subReddit);
