@@ -7,7 +7,8 @@ import java.time.LocalDateTime;
  * Created by Jakub Tuček on 28.8.2016.
  */
 @Entity
-public class BlogUpdateEntry extends BlogEntry {
+public class BlogUpdateEntry extends AbstractBlogEntry {
+
     public BlogUpdateEntry() {
     }
 

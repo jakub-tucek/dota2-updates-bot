@@ -7,24 +7,12 @@ import java.time.LocalDateTime;
  * Created by Jakub Tuček on 28.8.2016.
  */
 @Entity
-public class BlogEntry extends AbstractEntry {
-
-    private int valveId;
-
+public class BlogEntry extends AbstractBlogEntry {
 
     public BlogEntry() {
     }
 
     public BlogEntry(String title, String author, String url, String content, LocalDateTime posted, int valveId) {
-        super(title, author, url, content, posted);
-        this.valveId = valveId;
-    }
-
-    public int getValveId() {
-        return valveId;
-    }
-
-    public void setValveId(int valveId) {
-        this.valveId = valveId;
+        super(title, author, url, content, posted, valveId);
     }
 }
