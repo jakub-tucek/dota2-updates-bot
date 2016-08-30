@@ -74,7 +74,7 @@ public class DownloaderBlogService {
 //        setProxy();
 
         for (int i = 1; i <= DownloaderBlogConfig.BLOG_MAX_PAGES; i++) {
-            Document html = Jsoup.connect(DownloaderBlogConfig.BLOG_URL + i).userAgent(DownloaderConfig.USER_AGENT).header("Accept-Language", DownloaderConfig.HEADER_ACCEPT_LANG).get();
+            Document html = Jsoup.connect(DownloaderBlogConfig.BLOG_URL).userAgent(DownloaderConfig.USER_AGENT).header("Accept-Language", DownloaderConfig.HEADER_ACCEPT_LANG).get();
             Elements posts = blogParser.parsePage(html);
 
             for (Element entry : posts) {

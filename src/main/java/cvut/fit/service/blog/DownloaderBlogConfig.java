@@ -15,9 +15,11 @@ public class DownloaderBlogConfig {
     /**
      * Blog part config
      */
-    public final static int BLOG_MAX_PAGES = 3; //28.8 - 52
+//    public final static int BLOG_MAX_PAGES = 3; //28.8 - 52
+    public final static int BLOG_MAX_PAGES = 1; //28.8 - 52
 
-        public final static String BLOG_URL = "http://blog.dota2.com/page/";
+    public final static String BLOG_URL = "http://blog.dota2.com/";
+//    public final static String BLOG_URL = "http://blog.dota2.com/page/";
 //    public final static String BLOG_URL = "http://tomas.hostareal.cz/dota/index.php";
 
     /**
