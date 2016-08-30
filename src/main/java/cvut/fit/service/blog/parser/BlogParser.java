@@ -30,7 +30,7 @@ import java.util.Locale;
 public class BlogParser {
     private static final Logger log = LoggerFactory.getLogger(BlogParser.class);
 
-    final BlogUpdateEntryRepository blogUpdateEntryRepository;
+    private final BlogUpdateEntryRepository blogUpdateEntryRepository;
 
     private final BlogEntryRepository blogEntryRepository;
 
@@ -51,8 +51,8 @@ public class BlogParser {
      */
     public List<BlogUpdateEntry> parseUpdatePage(Document html) throws NumberFormatException, BlogParsingException {
         List<BlogUpdateEntry> basicBlogEntryListPage = new ArrayList<>();
-        Elements mainDiv = html.select("div[id^=post]");
-        for (Element entry : mainDiv) {
+        Elements posts = html.select("div[id^=post]");
+        for (Element entry : posts) {
             BlogUpdateEntry blogUpdateEntry = (BlogUpdateEntry) parseBasic(entry, true);
             List<BlogUpdateEntry> bl = blogUpdateEntryRepository.findByValveId(blogUpdateEntry.getValveId());
 
@@ -74,8 +74,8 @@ public class BlogParser {
      */
     public List<BlogEntry> parseBlogPage(Document html) throws NumberFormatException, BlogParsingException {
         List<BlogEntry> blogEntryListPage = new ArrayList<>();
-        Elements mainDiv = html.select("div[id^=post]");
-        for (Element entry : mainDiv) {
+        Elements posts = html.select("div[id^=post]");
+        for (Element entry : posts) {
             BlogEntry blogEntry = (BlogEntry) parseBasic(entry, false);
             parseBlogEntry(entry, blogEntry);
             List<BlogEntry> bl = blogEntryRepository.findByValveId(blogEntry.getValveId());
