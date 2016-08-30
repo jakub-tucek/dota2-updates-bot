@@ -6,9 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 //import java.sql.Date;
@@ -32,19 +30,19 @@ public class AbstractEntry {
     @Type(type = "text")
     private String content;
 
-    private Date posted;
+    private Timestamp posted;
 
     private Timestamp created;
 
     public AbstractEntry() {
     }
 
-    public AbstractEntry(String title, String author, String url, String content, LocalDate posted) {
+    public AbstractEntry(String title, String author, String url, String content, LocalDateTime posted) {
         this.title = title;
         this.author = author;
         this.url = url;
         this.content = content;
-        this.posted = Date.valueOf(posted);
+        this.posted = Timestamp.valueOf(posted);
         this.created = Timestamp.valueOf(LocalDateTime.now());
     }
 
@@ -96,12 +94,12 @@ public class AbstractEntry {
         this.created = Timestamp.valueOf(created);
     }
 
-    public LocalDate getPosted() {
-        return posted.toLocalDate();
+    public LocalDateTime getPosted() {
+        return posted.toLocalDateTime();
     }
 
-    public void setPosted(LocalDate posted) {
-        this.posted = Date.valueOf(posted);
+    public void setPosted(LocalDateTime posted) {
+        this.posted = Timestamp.valueOf(posted);
     }
 
 }

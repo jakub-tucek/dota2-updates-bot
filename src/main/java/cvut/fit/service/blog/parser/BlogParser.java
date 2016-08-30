@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -94,7 +95,7 @@ public class BlogParser {
         String title = parseTitle(entry);
 
         String[] postDateAuthorPartSplit = parsePostDateAuthor(entry);
-        LocalDate postDate = parsePostDateString(postDateAuthorPartSplit[0]);
+        LocalDateTime postDate = parsePostDateString(postDateAuthorPartSplit[0]);
         String author = parseAuthorString(postDateAuthorPartSplit[1]);
 
         String content = parseContent(entry);
@@ -173,10 +174,10 @@ public class BlogParser {
         return author.substring(DownloaderBlogConfig.AUTHOR_OFFSET);
     }
 
-    private LocalDate parsePostDateString(String postDateString) throws BlogParsingException {
+    private LocalDateTime parsePostDateString(String postDateString) throws BlogParsingException {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DownloaderBlogConfig.DATE_FORMAT, Locale.ENGLISH);
         try {
-            return LocalDate.parse(postDateString, formatter);
+            return LocalDateTime.from(LocalDate.parse(postDateString, formatter).atStartOfDay());
         } catch (DateTimeParseException ex) {
             throw new BlogParsingException("Invalid date(" + ex + ")");
         }

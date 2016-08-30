@@ -1,7 +1,7 @@
 package cvut.fit.domain.entity;
 
 import javax.persistence.Entity;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Created by Jakub Tuček on 28.8.2016.
@@ -15,7 +15,7 @@ public class BlogEntry extends AbstractEntry {
     public BlogEntry() {
     }
 
-    public BlogEntry(String title, String author, String url, String content, LocalDate posted, int valveId) {
+    public BlogEntry(String title, String author, String url, String content, LocalDateTime posted, int valveId) {
         super(title, author, url, content, posted);
         this.valveId = valveId;
     }
