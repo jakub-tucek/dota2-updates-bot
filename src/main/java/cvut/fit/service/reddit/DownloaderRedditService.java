@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,15 +49,20 @@ public class DownloaderRedditService {
             //Iteration over entry on page
             for (Element entry : posts) {
                 RedditEntry redditEntry = redditParser.parseUserSubmittedEntry(entry);
-                Document htmlPost = Jsoup.connect(redditEntry.getUrl()).userAgent(DownloaderConfig.USER_AGENT).header("Accept-Language", DownloaderConfig.HEADER_ACCEPT_LANG).get();
-                redditParser.parseEntryDetailContent(htmlPost, redditEntry);
-                List<RedditEntry> r1 = redditEntryRepository.findByUrl(redditEntry.getUrl());
+                try {
+                    Document htmlPost = Jsoup.connect(redditEntry.getUrl()).userAgent(DownloaderConfig.USER_AGENT).header("Accept-Language", DownloaderConfig.HEADER_ACCEPT_LANG).timeout(10*1000).get();
 
-                if (isCollisionFound(redditEntry, r1)) {
-                    collisionFound = true;
-                    break;
+                    redditParser.parseEntryDetailContent(htmlPost, redditEntry);
+                    List<RedditEntry> r1 = redditEntryRepository.findByUrl(redditEntry.getUrl());
+
+                    if (isCollisionFound(redditEntry, r1)) {
+                        collisionFound = true;
+                        break;
+                    }
+                    redditEntryList.add(redditEntry);
+                } catch (SocketTimeoutException ex) {
+                    ex.printStackTrace();
                 }
-                redditEntryList.add(redditEntry);
             }
             if (collisionFound) break;
 
