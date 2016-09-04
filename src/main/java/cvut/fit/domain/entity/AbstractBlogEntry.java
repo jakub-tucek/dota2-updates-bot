@@ -1,15 +1,14 @@
 package cvut.fit.domain.entity;
 
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
 /**
  * Created by Jakub Tuček on 30.8.2016.
  */
-@MappedSuperclass
+@Entity
 public class AbstractBlogEntry extends AbstractEntry {
     private int valveId;
-
 
     public AbstractBlogEntry() {
     }
