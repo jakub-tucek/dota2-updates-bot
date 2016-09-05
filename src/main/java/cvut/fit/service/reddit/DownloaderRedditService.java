@@ -55,7 +55,8 @@ public class DownloaderRedditService {
                     redditParser.parseEntryDetailContent(htmlPost, redditEntry);
                     List<RedditEntry> r1 = redditEntryRepository.findByUrl(redditEntry.getUrl());
 
-                    if (isCollisionFound(redditEntry, r1)) {
+                    //returns true if date are same
+                    if (processPossibleCollision(redditEntry, r1)) {
                         collisionFound = true;
                         break;
                     }
@@ -73,7 +74,7 @@ public class DownloaderRedditService {
         return redditEntryList;
     }
 
-    private boolean isCollisionFound(RedditEntry redditEntry, List<RedditEntry> r1EntryDatabase) throws RedditParsingException {
+    private boolean processPossibleCollision(RedditEntry redditEntry, List<RedditEntry> r1EntryDatabase) throws RedditParsingException {
         if (r1EntryDatabase.size() != 0) {
             log.info("Found collision in url of reddit post. Post is already saved.Url: " + redditEntry.getUrl());
             //URL already in DB
