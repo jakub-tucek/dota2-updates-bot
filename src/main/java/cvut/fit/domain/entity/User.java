@@ -1,11 +1,12 @@
 package cvut.fit.domain.entity;
 
-import org.hibernate.annotations.NaturalId;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Collection;
 
 /**
+ * User entity
  * Created by Jakub Tuček on 29.8.2016.
  */
 @Entity
